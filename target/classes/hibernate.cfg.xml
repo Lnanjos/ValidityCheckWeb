@@ -30,7 +30,7 @@
 		<property name="show_sql">true</property>
 
 		<!-- Cria as tabelas do banco de dados, depois disso muda para validate -->
-		<property name="hbm2ddl.auto">validate</property>
+		<property name="hbm2ddl.auto">create</property>
 
 
 	</session-factory>
