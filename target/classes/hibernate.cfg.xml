@@ -10,7 +10,7 @@
 
 		<!-- Configurações de Conexão com o Banco de Dados -->
 		<property name="connection.driver_class">com.mysql.jdbc.Driver</property>
-		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/validycheckbd	</property>
+		<property name="connection.url">jdbc:mysql://127.0.0.1:3306/validycheckbd</property>
 		<property name="connection.username">root</property>
 		<property name="connection.password"></property>
 
@@ -32,7 +32,9 @@
 		<!-- Cria as tabelas do banco de dados, depois disso muda para validate -->
 		<property name="hbm2ddl.auto">create</property>
 
-
+		<!-- Mapeamento das entidades coloca todas as classes do projeto-->
+		<mapping class="br.com.WSValidyCheck.domain.Secao" />
+		
 	</session-factory>
 
 </hibernate-configuration>
