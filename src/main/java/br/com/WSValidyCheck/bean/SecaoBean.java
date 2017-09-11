@@ -102,7 +102,6 @@ public class SecaoBean implements Serializable {
 			secaoDAO.excluir(secao);
 
 			secoes = secaoDAO.listar();
-se
 			Messages.addGlobalInfo("Secão excluido com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar");

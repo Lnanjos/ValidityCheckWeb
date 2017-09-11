@@ -6,7 +6,7 @@
 	xmlns:p="http://primefaces.org/ui">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Secao</title>
+	<title>Seção</title>
 </h:head>
 <h:body>
 	<p:growl id="mensagem" />
@@ -15,7 +15,7 @@
 	<h:form id="formListagem">
 
 		<!--criação do painel e nome do cabeçalho  -->
-		<p:panel header="Secao- Listagem">
+		<p:panel header="Seção - Listagem">
 
 			<!-- criação das tabelas que recebera os dados do no banco de dados -->
 			<p:dataTable id="tabela" emptyMessage="Nenhum Registro Encontrado"
@@ -40,9 +40,7 @@
 
 						<p:confirm header=" Confirmação"
 							message="Deseja excluir o secao?" icon="ui-icon-alert" />
-						<!-- O estado selecionado é preenchido com os dados da linha que foi clicada, usa o secao que é a 
-					var que ja foi criada anteriormente -->
-
+						
 						<f:attribute name="secaoSelecionado" value="#{secao}" />
 					</p:commandButton>
 
