@@ -16,7 +16,7 @@
   <!-- Parâmetros de execução -->
 	<build>
 		<!-- Nome do projeto empacotado -->
-		<finalName>Sistema</finalName>
+		<finalName>Validy Check</finalName>
 
 		<!-- Plugins -->
 		<plugins>
