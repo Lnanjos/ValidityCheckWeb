@@ -33,11 +33,11 @@ public class SecaoBean implements Serializable {
 		this.secao = secao;
 	}
 
-	public List<Secao> getSecaos() {
+	public List<Secao> getSecoes() {
 		return secoes;
 	}
 
-	public void setSecaos(List<Secao> secoes) {
+	public void setSecoes(List<Secao> secoes) {
 		this.secoes = secoes;
 	}
 
@@ -73,7 +73,7 @@ public class SecaoBean implements Serializable {
 			secao = new Secao();
 			secoes = secaoDAO.listar();
 
-			Messages.addGlobalInfo("Secao salvo com sucesso");
+			Messages.addGlobalInfo("Secão salvo com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar");
 			erro.printStackTrace();
@@ -102,8 +102,8 @@ public class SecaoBean implements Serializable {
 			secaoDAO.excluir(secao);
 
 			secoes = secaoDAO.listar();
-
-			Messages.addGlobalInfo("Secao excluido com sucesso");
+se
+			Messages.addGlobalInfo("Secão excluido com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar");
 			erro.printStackTrace();

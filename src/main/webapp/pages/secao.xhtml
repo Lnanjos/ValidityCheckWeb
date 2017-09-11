@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Secao</title>
+</h:head>
+<h:body>
+	<p:growl id="mensagem" />
+	<!-- se refere a uma tag do formulario -->
+	<!-- id que identifica qual componente que sera atualizado, é identificado pelo nome formListagem -->
+	<h:form id="formListagem">
+
+		<!--criação do painel e nome do cabeçalho  -->
+		<p:panel header="Secao- Listagem">
+
+			<!-- criação das tabelas que recebera os dados do no banco de dados -->
+			<p:dataTable id="tabela" emptyMessage="Nenhum Registro Encontrado"
+			 value="#{secaoBean.secoes}"	var="secao">
+
+				<f:facet name="footer">
+					<p:commandButton value="Novo" oncomplete="PF('dialogo').show();"
+						actionListener="#{secaoBean.novo}"
+						update=":formCadastro:painel" />
+				</f:facet>
+
+
+				<p:column headerText="Nome" sortBy="#{secao.nomeSecao}" filterBy="#{secao.nomeSecao}">
+					<h:outputText value="#{secao.nomeSecao}" />
+				</p:column>
+
+				<p:column headerText="Opções">
+					<!-- para usar icones pesquisar e usar o nome correto usando ui-icon  usando o actionListener mostra o caminho-->
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{secaoBean.excluir}"
+						update=":mensagem :formListagem:tabela">
+
+						<p:confirm header=" Confirmação"
+							message="Deseja excluir o secao?" icon="ui-icon-alert" />
+						<!-- O estado selecionado é preenchido com os dados da linha que foi clicada, usa o secao que é a 
+					var que ja foi criada anteriormente -->
+
+						<f:attribute name="secaoSelecionado" value="#{secao}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{secaoBean.editar}"
+						update=":mensagem :formCadastro:painel"
+						oncomplete="PF('dialogo').show(); ">
+
+						<!-- O secao selecionado é preenchido com os dados da linha que foi clicada, usa o secao que é a 
+					var que ja foi criada anteriormente -->
+						<f:attribute name="secaoSelecionado" value="#{secao}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>
+		</p:panel>
+	</h:form>
+
+	<!-- tamanho da janela resizable="false"  o é para fechar a janela closable="false" -->
+
+	<p:dialog header="Seções - Cadastro" widgetVar="dialogo"
+		draggable="false" resizable="false" modal="true" closable="false">
+		<h:form id="formCadastro">
+			<!-- define o numero de colunas dos elementos de sua paginas -->
+			<h:panelGrid id="painel" columns="2">
+				<p:outputLabel value="Nome:" />
+				<p:inputText maxlength="50" size="30"
+					value="#{secaoBean.secao.nomeSecao}" required="true"
+					requiredMessage="Campo nome Obrigatório!" />
+
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar"
+					actionListener="#{secaoBean.salvar}"
+					update=":mensagem :formCadastro:painel :formListagem:tabela" />
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>
