@@ -6,9 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
 import org.omnifaces.util.Messages;
-
 import br.com.WSValidyCheck.dao.ProdutoDAO;
 import br.com.WSValidyCheck.domain.Produto;
 
