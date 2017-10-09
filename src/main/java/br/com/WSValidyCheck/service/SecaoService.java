@@ -8,26 +8,23 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-
 import com.google.gson.Gson;
 import br.com.WSValidyCheck.dao.SecaoDAO;
 import br.com.WSValidyCheck.domain.Secao;
 
-
-//http://localhost:8080//ws/
+//http://localhost:8080/Validy_Check/ws/secao
 @Path("secao")
 public class SecaoService {
 	@GET
 	public String listar(){
-		SecaoDAO SecaoDAO = new SecaoDAO();
-		List<Secao> Secaos = SecaoDAO.listar();
+		SecaoDAO secaoDAO = new SecaoDAO();
+		List<Secao> secaos = secaoDAO.listar();
 		
 		Gson gson = new Gson();
-		String json = gson.toJson(Secaos);
+		String json = gson.toJson(secaos);
 		return json;
 	}
 	
-
 	@GET
 	@Path("{codigo}")
 	public String buscar(@PathParam("codigo")Long codigo){
@@ -46,7 +43,9 @@ public class SecaoService {
 		
 		SecaoDAO secaoDAO = new SecaoDAO();
 		System.out.println(secao);
-		secaoDAO.salvar(secao);
+		secao = secaoDAO.salvar(secao);
+		
+		System.out.println("cód:"+secao.getCodigo());
 		
 		String jsonSaida = gson.toJson(secao);
 		
@@ -77,6 +76,4 @@ public class SecaoService {
 		String jsonSaida = gson.toJson(secao);
 		return jsonSaida;
 	}
-	 
-
 }

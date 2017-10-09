@@ -73,7 +73,7 @@ public class SecaoBean implements Serializable {
 			secao = new Secao();
 			secoes = secaoDAO.listar();
 
-			Messages.addGlobalInfo("Secão salvo com sucesso");
+			Messages.addGlobalInfo("Seção salvo com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar");
 			erro.printStackTrace();
@@ -102,7 +102,7 @@ public class SecaoBean implements Serializable {
 			secaoDAO.excluir(secao);
 
 			secoes = secaoDAO.listar();
-			Messages.addGlobalInfo("Secão excluido com sucesso");
+			Messages.addGlobalInfo("Seção excluido com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar");
 			erro.printStackTrace();

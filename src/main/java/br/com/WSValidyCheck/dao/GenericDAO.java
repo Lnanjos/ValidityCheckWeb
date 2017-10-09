@@ -74,7 +74,8 @@ public class GenericDAO<Entidade> {
 	
 
 	// criar uma entidade do tipo entidade
-	public void salvar(Entidade entidade) {
+	@SuppressWarnings("unchecked")
+	public Entidade salvar(Entidade entidade) {
 		// criar conecçao com o banco
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
 		// é a acao que ocorre dentro da sessao
@@ -87,9 +88,10 @@ public class GenericDAO<Entidade> {
 			// salva o registro no banco
 			//sessao.save(entidade);
 			// função do merge: se o objeto nao existe no banco ele vai salvar um novo, se ele ja existe ele vai atualizar
-			sessao.merge(entidade);
+			entidade = (Entidade) sessao.merge(entidade);
 			// commit encerra a transacao
 			transacao.commit();
+			return entidade;
 		} catch (RuntimeException erro) {
 			if (transacao != null) {
 				transacao.rollback();
