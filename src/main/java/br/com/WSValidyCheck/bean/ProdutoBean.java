@@ -8,15 +8,25 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Messages;
 import br.com.WSValidyCheck.dao.ProdutoDAO;
+import br.com.WSValidyCheck.dao.SecaoDAO;
 import br.com.WSValidyCheck.domain.Produto;
+import br.com.WSValidyCheck.domain.Secao;
 
 @ManagedBean
 @ViewScoped
 public class ProdutoBean {
-	
-	private List<Produto> produtos;
-	
 	private Produto produto;
+
+	private List<Produto> produtos;
+	private List<Secao> secoes;
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
 
 	public List<Produto> getProdutos() {
 		return produtos;
@@ -26,59 +36,73 @@ public class ProdutoBean {
 		this.produtos = produtos;
 	}
 
-	public Produto getProduto() {
-		return produto;
+	public List<Secao> getSecaos() {
+		return secoes;
 	}
 
-	public void setProduto(Produto produto) {
-		this.produto = produto;
+	public void setSecaos(List<Secao> secoes) {
+		this.secoes = secoes;
 	}
-	
+
 	@PostConstruct
 	public void listar() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtos = produtoDAO.listar();
-
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro");
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar listar as produtos");
 			erro.printStackTrace();
-
 		}
 	}
 
 	public void novo() {
-		produto = new Produto();
+		try {
+			// metodo que gera um novo objeto
+			produto = new Produto();
+
+			SecaoDAO secaoDAO = new SecaoDAO();
+			secoes = secaoDAO.listar();
+		} catch (RuntimeException erro) {
+			Messages.addFlashGlobalError("Ocorreu um erro ao gerar uma nova produto");
+			erro.printStackTrace();
+		}
 	}
 
 	public void salvar() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtoDAO.salvar(produto);
+
+			// implementação para atraves da list, e cada vez que for salvo sera
+			// listado novamente os dados e serao mostrados na tela
+			// dessa forma renovo a minha tabela de secoes a cada exclusão ou
+			// edição de dados.
+			// instancia-se um novo para pode fazer os outros metodos, muda o
+			// merge no genericDAO
 			produto = new Produto();
+
+			SecaoDAO secaoDAO = new SecaoDAO();
+			secoes = secaoDAO.listar();
+
 			produtos = produtoDAO.listar();
 
-			Messages.addGlobalInfo("Produto salvo com sucesso");
+			Messages.addGlobalInfo("Produto salva com sucesso");
 		} catch (RuntimeException erro) {
-			Messages.addGlobalError("Ocorreu um erro ao tentar salvar");
+			Messages.addFlashGlobalError("Ocorreu um erro ao tentar salvar uma nova produto");
 			erro.printStackTrace();
 		}
-	}
-
-	public void editar(ActionEvent evento) {
-		produto = (Produto) evento.getComponent().getAttributes()
-				.get("produtoSelecionado");
 	}
 
 	public void excluir(ActionEvent evento) {
 		try {
 			produto = (Produto) evento.getComponent().getAttributes()
-					.get("produtoSelecionado");
+					.get("produtoSelecionada");
 
 			ProdutoDAO produtoDAO = new ProdutoDAO();
 			produtoDAO.excluir(produto);
 
 			produtos = produtoDAO.listar();
+
 			Messages.addGlobalInfo("Produto excluido com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar");
@@ -86,4 +110,22 @@ public class ProdutoBean {
 		}
 	}
 
+	public void editar(ActionEvent evento) {
+
+		try {
+			produto = (Produto) evento.getComponent().getAttributes()
+					.get("produtoSelecionada");
+
+			SecaoDAO secaoDAO = new SecaoDAO();
+			secoes = secaoDAO.listar();
+
+		} catch (RuntimeException erro) {
+			Messages.addGlobalError("Ocorreu um erro ao tentar selecionar uma produto");
+			erro.printStackTrace();
+
+		}
+		// tabela hash: tabela de endereçamento, separa os codigos e
+		// endereçamento
+
+	}
 }
