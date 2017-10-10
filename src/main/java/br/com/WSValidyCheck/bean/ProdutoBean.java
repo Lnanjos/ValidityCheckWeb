@@ -1,5 +1,6 @@
 package br.com.WSValidyCheck.bean;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -12,9 +13,10 @@ import br.com.WSValidyCheck.dao.SecaoDAO;
 import br.com.WSValidyCheck.domain.Produto;
 import br.com.WSValidyCheck.domain.Secao;
 
+@SuppressWarnings("serial")
 @ManagedBean
 @ViewScoped
-public class ProdutoBean {
+public class ProdutoBean implements Serializable {
 	private Produto produto;
 
 	private List<Produto> produtos;
@@ -36,11 +38,11 @@ public class ProdutoBean {
 		this.produtos = produtos;
 	}
 
-	public List<Secao> getSecaos() {
+	public List<Secao> getSecoes() {
 		return secoes;
 	}
 
-	public void setSecaos(List<Secao> secoes) {
+	public void setSecoes(List<Secao> secoes) {
 		this.secoes = secoes;
 	}
 
