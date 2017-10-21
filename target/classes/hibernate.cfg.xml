@@ -35,6 +35,7 @@
 		<!-- Mapeamento das entidades coloca todas as classes do projeto-->
 		<mapping class="br.com.WSValidyCheck.domain.Secao" />
 		<mapping class="br.com.WSValidyCheck.domain.Produto" />
+		<mapping class="br.com.WSValidyCheck.domain.Lote" />
 		
 	</session-factory>
 

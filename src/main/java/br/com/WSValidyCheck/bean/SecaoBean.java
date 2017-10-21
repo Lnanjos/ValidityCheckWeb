@@ -3,13 +3,11 @@ package br.com.WSValidyCheck.bean;
 
 import java.io.Serializable;
 import java.util.List;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 import org.omnifaces.util.Messages;
-
 import br.com.WSValidyCheck.dao.SecaoDAO;
 import br.com.WSValidyCheck.domain.Secao;
 
@@ -46,11 +44,9 @@ public class SecaoBean implements Serializable {
 		try {
 			SecaoDAO secaoDAO = new SecaoDAO();
 			secoes = secaoDAO.listar();
-
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro");
 			erro.printStackTrace();
-
 		}
 	}
 

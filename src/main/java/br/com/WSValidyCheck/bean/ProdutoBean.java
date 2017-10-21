@@ -88,7 +88,7 @@ public class ProdutoBean implements Serializable {
 
 			produtos = produtoDAO.listar();
 
-			Messages.addGlobalInfo("Produto salva com sucesso");
+			Messages.addGlobalInfo("Produto salvo com sucesso");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar salvar uma nova produto");
 			erro.printStackTrace();
@@ -118,16 +118,15 @@ public class ProdutoBean implements Serializable {
 			produto = (Produto) evento.getComponent().getAttributes()
 					.get("produtoSelecionada");
 
+			ProdutoDAO produtoDAO = new ProdutoDAO();
+			produtos = produtoDAO.listar();
+			
 			SecaoDAO secaoDAO = new SecaoDAO();
 			secoes = secaoDAO.listar();
 
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar selecionar uma produto");
 			erro.printStackTrace();
-
 		}
-		// tabela hash: tabela de endereçamento, separa os codigos e
-		// endereçamento
-
 	}
 }

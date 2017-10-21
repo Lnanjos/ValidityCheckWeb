@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Lotes</title>
+</h:head>
+<h:body>
+	<p:layoutUnit>
+			<ui:include src="/template/menu.xhtml"></ui:include>
+	</p:layoutUnit>
+
+	<p:growl id="mensagem" />
+
+	<h:form id="formListagem">
+		<p:panel header="Lotes - Listagem">
+			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+				paginator="true" value="#{loteBean.lotes}" var="lote" rows="5">
+				<f:facet name="footer">
+					<p:commandButton value="Novo" actionListener="#{loteBean.novo}"
+						oncomplete="PF('dialogo').show();"
+						update=":mensagem :formCadastro:painel" />
+				</f:facet>
+				
+				<p:column headerText="Data de Validade" filterBy="#{lote.validade}"
+					sortBy="#{lote.validade}">
+					<h:outputText value="#{lote.validade}">
+						<f:convertDateTime locale="pt_BR"></f:convertDateTime>
+					</h:outputText>
+				</p:column>
+				
+				<p:column headerText="Código de Barras" filterBy="#{lote.produto.codBarraProduto}"
+					sortBy="#{lote.produto.codBarraProduto}">
+					<h:outputText value="#{lote.produto.codBarraProduto}" />
+				</p:column>
+
+				<p:column headerText="Nome" filterBy="#{lote.produto.nomeProduto}"
+					sortBy="#{lote.produto.nomeProduto}">
+					<h:outputText value="#{lote.produto.nomeProduto}" />
+				</p:column>
+
+				<p:column headerText="Seção" filterBy="#{lote.produto.nomeProduto}"
+					sortBy="#{lote.produto.nome}">
+					<h:outputText value="#{lote.produto.secao.codigo}" />
+					<h:outputText value=" - " />
+					<h:outputText value="#{lote.produto.secao.nomeSecao}" />
+				</p:column>
+			
+				<p:column headerText="Opções">
+					<p:commandButton icon="ui-icon-trash"
+						actionListener="#{loteBean.excluir}"
+						update=":mensagem :formListagem:tabela">
+						<p:confirm header="Confirmação" message="Deseja excluir a lote"
+							icon="ui-icon-alert" />
+						<f:attribute name="loteSelecionada" value="#{lote}" />
+					</p:commandButton>
+
+					<p:commandButton icon="ui-icon-pencil"
+						actionListener="#{loteBean.editar}"
+						update=":mensagem :formCadastro:painel"
+						oncomplete="PF('dialogo').show();">
+						<f:attribute name="loteSelecionada" value="#{lote}" />
+					</p:commandButton>
+				</p:column>
+				
+			</p:dataTable>
+			
+			<p:confirmDialog global="true">
+				<p:commandButton value="Sim" type="button"
+					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+				<p:commandButton value="Não" type="button"
+					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+			</p:confirmDialog>			
+		</p:panel>
+	</h:form>
+
+	<p:dialog header="Lotes - Cadastro" widgetVar="dialogo"
+		draggable="false" resizable="false" modal="true" closable="false">
+		<h:form id="formCadastro">
+			<h:panelGrid id="painel" columns="2">
+			
+				<p:outputLabel value="Validade:" for="validade"/>
+				<p:calendar id="validade" value="#{loteBean.lote.validade}" showOn="button" pattern="dd/MM/yyyy" mask="true" />
+				
+				<p:outputLabel value="Produto:" for="produto"/>
+				<p:selectOneMenu id="produto" filter="true" value="#{loteBean.produto}"
+					converter="omnifaces.SelectItemsConverter"
+					required="true" requiredMessage="Campo Produto Obrigatório!">
+					<f:selectItem noSelectionOption="true" itemLabel="Selecione um produto" />
+					<f:selectItems value="#{loteBean.produtos}" var="produto"
+						itemValue="#{produto}" itemLabel="#{produto.codBarraProduto} - #{produto.nomeProduto}" />
+				</p:selectOneMenu>
+				
+			</h:panelGrid>
+
+			<h:panelGrid columns="2">
+				<p:commandButton value="Salvar" actionListener="#{loteBean.salvar}"
+					update=":mensagem :formCadastro:painel :formListagem:tabela" />
+				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+			</h:panelGrid>
+		</h:form>
+	</p:dialog>
+</h:body>
+</html>
