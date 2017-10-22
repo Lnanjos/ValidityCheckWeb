@@ -87,7 +87,7 @@
 				<p:calendar id="validade" value="#{loteBean.lote.validade}" showOn="button" pattern="dd/MM/yyyy" mask="true" />
 				
 				<p:outputLabel value="Produto:" for="produto"/>
-				<p:selectOneMenu id="produto" filter="true" value="#{loteBean.produto}"
+				<p:selectOneMenu id="produto" filter="true" filterMatchMode="contains" value="#{loteBean.produto}"
 					converter="omnifaces.SelectItemsConverter"
 					required="true" requiredMessage="Campo Produto Obrigatório!">
 					<f:selectItem noSelectionOption="true" itemLabel="Selecione um produto" />
