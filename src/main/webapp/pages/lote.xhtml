@@ -84,7 +84,8 @@
 			<h:panelGrid id="painel" columns="2">
 			
 				<p:outputLabel value="Validade:" for="validade"/>
-				<p:calendar id="validade" value="#{loteBean.lote.validade}" showOn="button" pattern="dd/MM/yyyy" mask="true" />
+				<p:calendar id="validade" value="#{loteBean.lote.validade}" showOn="button" pattern="dd/MM/yyyy" mask="true"
+				required="true" requiredMessage="Campo Validade Obrigatório" />
 				
 				<p:outputLabel value="Produto:" for="produto"/>
 				<p:selectOneMenu id="produto" filter="true" filterMatchMode="contains" value="#{loteBean.produto}"

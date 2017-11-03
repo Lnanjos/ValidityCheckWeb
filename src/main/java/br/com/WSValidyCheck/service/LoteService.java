@@ -17,7 +17,7 @@ public class LoteService {
 	@GET
 	public String listar() {
 		LoteDAO loteDAO = new LoteDAO();
-		List<Lote> lotes = loteDAO.listar();
+		List<Lote> lotes = loteDAO.listarOrdenado("validade");
 
 		Gson gson = new Gson();
 		String json = gson.toJson(lotes);

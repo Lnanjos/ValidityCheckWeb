@@ -43,7 +43,7 @@ public class SecaoBean implements Serializable {
 	public void listar() {
 		try {
 			SecaoDAO secaoDAO = new SecaoDAO();
-			secoes = secaoDAO.listar();
+			secoes = secaoDAO.listarOrdenado("codigo");
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro");
 			erro.printStackTrace();

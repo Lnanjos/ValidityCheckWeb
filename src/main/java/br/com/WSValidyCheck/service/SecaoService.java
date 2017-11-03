@@ -18,7 +18,7 @@ public class SecaoService {
 	@GET
 	public String listar(){
 		SecaoDAO secaoDAO = new SecaoDAO();
-		List<Secao> secaos = secaoDAO.listar();
+		List<Secao> secaos = secaoDAO.listarOrdenado("codigo");
 		
 		Gson gson = new Gson();
 		String json = gson.toJson(secaos);

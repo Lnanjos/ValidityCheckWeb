@@ -50,7 +50,7 @@ public class ProdutoBean implements Serializable {
 	public void listar() {
 		try {
 			ProdutoDAO produtoDAO = new ProdutoDAO();
-			produtos = produtoDAO.listar();
+			produtos = produtoDAO.listarOrdenado("codBarraProduto");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar listar as produtos");
 			erro.printStackTrace();

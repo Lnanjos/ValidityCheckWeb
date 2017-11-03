@@ -17,7 +17,7 @@ public class ProdutoService {
 	@GET
 	public String listar() {
 		ProdutoDAO produtoDAO = new ProdutoDAO();
-		List<Produto> produtos = produtoDAO.listar();
+		List<Produto> produtos = produtoDAO.listarOrdenado("codBarraProduto");
 
 		Gson gson = new Gson();
 		String json = gson.toJson(produtos);

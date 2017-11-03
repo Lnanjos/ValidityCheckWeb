@@ -56,7 +56,7 @@ public class LoteBean implements Serializable {
 	public void listar() {
 		try {
 			LoteDAO loteDAO = new LoteDAO();
-			lotes = loteDAO.listar();
+			lotes = loteDAO.listarOrdenado("validade");
 		} catch (RuntimeException erro) {
 			Messages.addFlashGlobalError("Ocorreu um erro ao tentar listar as lotes");
 			erro.printStackTrace();
