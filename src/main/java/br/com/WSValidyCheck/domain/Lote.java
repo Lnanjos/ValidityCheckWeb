@@ -1,6 +1,8 @@
 package br.com.WSValidyCheck.domain;
 
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,6 +34,12 @@ public class Lote extends GenericDomain {
 
 	public void setValidade(Date validade) {
 		this.validade = validade;
+	}
+	
+	public String getValidadeToString(){
+		Locale brasil = new Locale("pt", "BR");
+        DateFormat dateFormat = DateFormat.getDateInstance(DateFormat.DEFAULT, brasil);
+        return dateFormat.format(validade);
 	}
 	
 }

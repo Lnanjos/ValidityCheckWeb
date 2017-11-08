@@ -36,6 +36,7 @@
 		<mapping class="br.com.WSValidyCheck.domain.Secao" />
 		<mapping class="br.com.WSValidyCheck.domain.Produto" />
 		<mapping class="br.com.WSValidyCheck.domain.Lote" />
+		<mapping class="br.com.WSValidyCheck.domain.Usuario" />
 		
 	</session-factory>
 

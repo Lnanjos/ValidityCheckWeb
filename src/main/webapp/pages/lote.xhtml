@@ -11,7 +11,7 @@
 </h:head>
 <h:body>
 	<p:layoutUnit>
-			<ui:include src="/template/menu.xhtml"></ui:include>
+		<ui:include src="/template/menu.xhtml"></ui:include>
 	</p:layoutUnit>
 
 	<p:growl id="mensagem" />
@@ -19,21 +19,26 @@
 	<h:form id="formListagem">
 		<p:panel header="Lotes - Listagem">
 			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-				paginator="true" value="#{loteBean.lotes}" var="lote" rows="5">
+				paginator="true" value="#{loteBean.lotes}" var="lote" rows="8">
 				<f:facet name="footer">
 					<p:commandButton value="Novo" actionListener="#{loteBean.novo}"
 						oncomplete="PF('dialogo').show();"
-						update=":mensagem :formCadastro:painel" />
+						update=":mensagem :formCadastro:painel">
+						<f:actionListener
+							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"></f:actionListener>
+					</p:commandButton>
 				</f:facet>
-				
-				<p:column headerText="Data de Validade" filterBy="#{lote.validade}"
-					sortBy="#{lote.validade}">
+
+				<p:column headerText="Data de Validade"
+					filterBy="#{lote.validadeToString}" sortBy="#{lote.validade}"
+					filterMatchMode="contains">
 					<h:outputText value="#{lote.validade}">
 						<f:convertDateTime locale="pt_BR"></f:convertDateTime>
 					</h:outputText>
 				</p:column>
-				
-				<p:column headerText="Código de Barras" filterBy="#{lote.produto.codBarraProduto}"
+
+				<p:column headerText="Código de Barras"
+					filterBy="#{lote.produto.codBarraProduto}"
 					sortBy="#{lote.produto.codBarraProduto}">
 					<h:outputText value="#{lote.produto.codBarraProduto}" />
 				</p:column>
@@ -43,13 +48,14 @@
 					<h:outputText value="#{lote.produto.nomeProduto}" />
 				</p:column>
 
-				<p:column headerText="Seção" filterBy="#{lote.produto.nomeProduto}"
-					sortBy="#{lote.produto.nome}">
+				<p:column headerText="Seção"
+					filterBy="#{lote.produto.secao.nomeSecao} #{lote.produto.secao.codigo}"
+					sortBy="#{lote.produto.secao.codigo}" filterMatchMode="contains">
 					<h:outputText value="#{lote.produto.secao.codigo}" />
 					<h:outputText value=" - " />
 					<h:outputText value="#{lote.produto.secao.nomeSecao}" />
 				</p:column>
-			
+
 				<p:column headerText="Opções">
 					<p:commandButton icon="ui-icon-trash"
 						actionListener="#{loteBean.excluir}"
@@ -66,15 +72,15 @@
 						<f:attribute name="loteSelecionada" value="#{lote}" />
 					</p:commandButton>
 				</p:column>
-				
+
 			</p:dataTable>
-			
+
 			<p:confirmDialog global="true">
 				<p:commandButton value="Sim" type="button"
 					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
 				<p:commandButton value="Não" type="button"
 					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-			</p:confirmDialog>			
+			</p:confirmDialog>
 		</p:panel>
 	</h:form>
 
@@ -82,20 +88,25 @@
 		draggable="false" resizable="false" modal="true" closable="false">
 		<h:form id="formCadastro">
 			<h:panelGrid id="painel" columns="2">
-			
-				<p:outputLabel value="Validade:" for="validade"/>
-				<p:calendar id="validade" value="#{loteBean.lote.validade}" showOn="button" pattern="dd/MM/yyyy" mask="true"
-				required="true" requiredMessage="Campo Validade Obrigatório" />
-				
-				<p:outputLabel value="Produto:" for="produto"/>
-				<p:selectOneMenu id="produto" filter="true" filterMatchMode="contains" value="#{loteBean.produto}"
-					converter="omnifaces.SelectItemsConverter"
-					required="true" requiredMessage="Campo Produto Obrigatório!">
-					<f:selectItem noSelectionOption="true" itemLabel="Selecione um produto" />
+
+				<p:outputLabel value="Validade:" for="validade" />
+				<p:calendar id="validade" value="#{loteBean.lote.validade}"
+					showOn="button" pattern="dd/MM/yyyy" mask="true" required="true"
+					requiredMessage="Campo Validade Obrigatório"
+					mindate="#{loteBean.dataAtual}" />
+
+				<p:outputLabel value="Produto:" for="produto" />
+				<p:selectOneMenu id="produto" filter="true"
+					filterMatchMode="contains" value="#{loteBean.produto}"
+					converter="omnifaces.SelectItemsConverter" required="true"
+					requiredMessage="Campo Produto Obrigatório!">
+					<f:selectItem noSelectionOption="true"
+						itemLabel="Selecione um produto" />
 					<f:selectItems value="#{loteBean.produtos}" var="produto"
-						itemValue="#{produto}" itemLabel="#{produto.codBarraProduto} - #{produto.nomeProduto}" />
+						itemValue="#{produto}"
+						itemLabel="#{produto.codBarraProduto} - #{produto.nomeProduto}" />
 				</p:selectOneMenu>
-				
+
 			</h:panelGrid>
 
 			<h:panelGrid columns="2">

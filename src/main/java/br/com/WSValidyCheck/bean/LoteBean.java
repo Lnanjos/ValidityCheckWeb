@@ -1,6 +1,7 @@
 package br.com.WSValidyCheck.bean;
 
 import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -27,6 +28,9 @@ public class LoteBean implements Serializable {
 	private Produto produto;
 	
 	private Lote lote;
+	
+	//usada para definir a data minima na hora de salvar um lote
+	private Date dataAtual = new Date();
 
 	public List<Lote> getLotes() {
 		return lotes;
@@ -144,5 +148,13 @@ public class LoteBean implements Serializable {
 
 	public void setProduto(Produto produto) {
 		this.produto = produto;
+	}
+
+	public Date getDataAtual() {
+		return dataAtual;
+	}
+
+	public void setDataAtual(Date dataAtual) {
+		this.dataAtual = dataAtual;
 	}
 }

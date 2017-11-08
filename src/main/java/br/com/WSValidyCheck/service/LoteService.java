@@ -6,14 +6,20 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
+
 import com.google.gson.Gson;
 import br.com.WSValidyCheck.dao.LoteDAO;
 import br.com.WSValidyCheck.domain.Lote;
+import br.com.WSValidyCheck.domain.Secao;
 
 //http://localhost:8080/Validy_Check/ws/lote
 @Path("lote")
 public class LoteService {
+	
+	public static final Long EMPTY = (long) 0;
+	
 	@GET
 	public String listar() {
 		LoteDAO loteDAO = new LoteDAO();
@@ -25,16 +31,23 @@ public class LoteService {
 	}
 
 	@GET
-	@Path("{codigo}")
-	public String buscar(@PathParam("codigo") Long codigo) {
-		LoteDAO loteDAO = new LoteDAO();
-		Lote lote = loteDAO.buscar(codigo);
-
+	@Path("listar")
+	@Produces("text/plain")
+	public String listarPorSecao(@QueryParam("secao") String secaoString,
+			@QueryParam("dataInicial") String dataInicial,
+			@QueryParam("dataFinal") String dataFinal) {
+		Secao secao = null;
 		Gson gson = new Gson();
-		String json = gson.toJson(lote);
+		if(!secaoString.isEmpty()){
+			secao = gson.fromJson(secaoString, Secao.class);
+		}
+		
+		LoteDAO loteDAO = new LoteDAO();
+		List<Lote> lotes = loteDAO.listarPorSecao(secao,dataInicial,dataFinal);
+		String json = gson.toJson(lotes);
 		return json;
 	}
-
+	
 	@POST
 	public String salvar(String json) {
 		Gson gson = new Gson();
