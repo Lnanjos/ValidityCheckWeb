@@ -46,7 +46,11 @@ public class LoteBean implements Serializable {
 	private int lotesVencidos = lotesVencidos();
 	
 	private boolean temLotesVencidos = temLotesVencidos();
-
+	
+	private int lotesVencendoUmMes = lotesVencendoUmMes();
+	
+	private boolean temLotesVencendoUmMes = temLotesVencendoUmMes();
+	
 	public int getLotesVencendo() {
 		return lotesVencendo;
 	}
@@ -280,5 +284,34 @@ public class LoteBean implements Serializable {
 		}else{
 			return false;
 		}	
+	}
+	
+	private boolean temLotesVencendoUmMes() {
+		if(lotesVencendoUmMes>0){
+			return true;	
+		}else{
+			return false;
+		}	
+	}
+	
+	private int lotesVencendoUmMes() {
+		LoteDAO loteDAO = new LoteDAO();
+		return loteDAO.contarLotesVencendoUmMes();
+	}
+	
+	public int getLotesVencendoUmMes() {
+		return lotesVencendoUmMes;
+	}
+
+	public void setLotesVencendoUmMes(int lotesVencendoUmMes) {
+		this.lotesVencendoUmMes = lotesVencendoUmMes;
+	}
+
+	public boolean isTemLotesVencendoUmMes() {
+		return temLotesVencendoUmMes;
+	}
+
+	public void setTemLotesVencendoUmMes(boolean temLotesVencendoUmMes) {
+		this.temLotesVencendoUmMes = temLotesVencendoUmMes;
 	}
 }

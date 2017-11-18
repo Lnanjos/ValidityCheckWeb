@@ -15,10 +15,10 @@
 					<h:outputLabel rendered="#{loteBean.temLotesVencidos}"
 						value="Você tem " styleClass="ui-widget"
 						style="float: left;color: black;    margin-top: 10px; margin-left: 10px;">
-						<h:outputLabel style="color: red;"
+						<h:outputLabel style="color: #d50000;"
 							value="#{loteBean.lotesVencidos} " />
 						<h:outputLabel value="lotes" />
-						<h:outputLabel style="color: red;" value=" VENCIDOS" />
+						<h:outputLabel style="color: #d50000;" value=" VENCIDOS" />
 					</h:outputLabel>
 				</h:outputLink>
 
@@ -26,10 +26,21 @@
 					<h:outputLabel rendered="#{loteBean.temLotesVencendo}"
 						value="Você tem " styleClass="ui-widget"
 						style="float: left; color: black;    margin-top: 10px; margin-left: 10px;">
-						<h:outputLabel style="color: lightcoral;"
+						<h:outputLabel style="color: #ff7043;"
 							value="#{loteBean.lotesVencendo} " />
 						<h:outputLabel value="lotes com validade para" />
-						<h:outputLabel style="color: lightcoral;" value=" 15 DIAS" />
+						<h:outputLabel style="color: #ff7043;" value=" 15 DIAS" />
+					</h:outputLabel>
+				</h:outputLink>
+				
+				<h:outputLink value="lote.xhtml">
+					<h:outputLabel rendered="#{loteBean.temLotesVencendoUmMes}"
+						value="Você tem " styleClass="ui-widget"
+						style="float: left; color: black;    margin-top: 10px; margin-left: 10px;">
+						<h:outputLabel style="color: #ffb74d;"
+							value="#{loteBean.lotesVencendoUmMes} " />
+						<h:outputLabel value="lotes com validade para" />
+						<h:outputLabel style="color: #ffb74d;" value=" UM MÊS " />
 					</h:outputLabel>
 				</h:outputLink>
 			</h:panelGrid>

@@ -81,4 +81,24 @@ public class LoteDAO extends GenericDAO<Lote>{
 			sessao.close();
 		}
 	}
+
+	public int contarLotesVencendoUmMes() {
+		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
+		try {
+			Criteria consulta = sessao.createCriteria(Lote.class);
+			
+			Date today = new Date();
+			Date till = new Date();
+			till.setTime(till.getTime()+FIFTEEN_DAYS+FIFTEEN_DAYS);
+			
+			consulta.add(Restrictions.between("validade", today, till));
+			System.out.println("Vencendo: "+consulta.list().size());
+			
+			return consulta.list().size();
+		} catch (RuntimeException erro) {
+			throw erro;
+		} finally {
+			sessao.close();
+		}
+	}
 }
