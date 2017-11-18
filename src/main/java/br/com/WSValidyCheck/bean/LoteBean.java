@@ -1,20 +1,27 @@
 package br.com.WSValidyCheck.bean;
 
 import java.io.Serializable;
+import java.sql.Connection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
-
+import org.primefaces.component.datatable.DataTable;
 import br.com.WSValidyCheck.dao.LoteDAO;
 import br.com.WSValidyCheck.dao.ProdutoDAO;
 import br.com.WSValidyCheck.domain.Lote;
 import br.com.WSValidyCheck.domain.Produto;
+import br.com.WSValidyCheck.util.HibernateUtil;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 @ManagedBean
 @SuppressWarnings("serial")
@@ -28,9 +35,49 @@ public class LoteBean implements Serializable {
 	private Produto produto;
 	
 	private Lote lote;
-	
+
 	//usada para definir a data minima na hora de salvar um lote
 	private Date dataAtual = new Date();
+
+	private int lotesVencendo = lotesVencendo();
+	
+	private boolean temLotesVencendo = temLotesVencendo();
+	
+	private int lotesVencidos = lotesVencidos();
+	
+	private boolean temLotesVencidos = temLotesVencidos();
+
+	public int getLotesVencendo() {
+		return lotesVencendo;
+	}
+
+	public void setLotesVencendo(int lotesVencendo) {
+		this.lotesVencendo = lotesVencendo;
+	}
+
+	public boolean isTemLotesVencendo() {
+		return temLotesVencendo;
+	}
+
+	public void setTemLotesVencendo(boolean temLotesVencendo) {
+		this.temLotesVencendo = temLotesVencendo;
+	}
+
+	public int getLotesVencidos() {
+		return lotesVencidos;
+	}
+
+	public void setLotesVencidos(int lotesVencidos) {
+		this.lotesVencidos = lotesVencidos;
+	}
+
+	public boolean isTemLotesVencidos() {
+		return temLotesVencidos;
+	}
+
+	public void setTemLotesVencidos(boolean temLotesVencidos) {
+		this.temLotesVencidos = temLotesVencidos;
+	}
 
 	public List<Lote> getLotes() {
 		return lotes;
@@ -156,5 +203,82 @@ public class LoteBean implements Serializable {
 
 	public void setDataAtual(Date dataAtual) {
 		this.dataAtual = dataAtual;
+	}
+	
+	public void imprimir(){
+		try {
+			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("formListagem:tabela");
+			Map<String, Object> filtros = tabela.getFilters();
+			
+			System.out.println(filtros);
+
+			String filterCodBarra = "%"+(String) filtros.get("produto.codBarraProduto")+"%";
+			String filterNomeProduto = "%"+(String) filtros.get("produto.nomeProduto")+"%";
+			String filterNomeSecao = "%"+(String) filtros.get("produto.secao.codigo} #{produto.secao.nomeSecao")+"%";
+			String filterData = "%"+(String) filtros.get("dataValidade")+"%";
+
+			// caminho de acesso ao relatório
+			String caminho = Faces.getRealPath("/reports/lotes.jasper");
+
+			/*
+			 * Método para usar a imagem no relatório String logo =
+			 * Faces.getRealPath("/reports/logo2.png");
+			 * System.out.println(logo); parametros.put("reportlogo", logo);
+			 */
+
+			Map<String, Object> parametros = new HashMap<>();
+			if(!filtros.isEmpty()){
+				if (!filterCodBarra.equals("%null%")) {
+					parametros.put("CODIGO", filterCodBarra);
+				}
+				if (!filterNomeProduto.equals("%null%")){
+					parametros.put("NOME_PRODUTO", filterNomeProduto);
+				}
+				if (!filterNomeSecao.equals("%null%")){
+					parametros.put("NOME_SECAO", filterNomeSecao);
+				}
+				if(!filterData.equals("%null%")){
+					parametros.put("DATA_VALIDADE", filterData);
+				}	
+			}	
+			
+			//cria a conexão
+			Connection conexao = HibernateUtil.getConexao();
+			
+			//Criação do relatório
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros,conexao);
+			JasperPrintManager.printReport(relatorio, false);
+			
+	
+		} catch (Exception e) {
+			e.printStackTrace();
+			Messages.addGlobalError("Ocorreu um erro ao gerar relatório");
+		}
+	}
+	
+	public int lotesVencendo(){
+		LoteDAO loteDAO = new LoteDAO();
+		return loteDAO.contarLotesVencendo();
+	}
+	
+	private boolean temLotesVencendo() {
+		if(lotesVencendo>0){
+			return true;	
+		}else{
+			return false;
+		}	
+	}
+	
+	public int lotesVencidos(){
+		LoteDAO loteDAO = new LoteDAO();
+		return loteDAO.contarLotesVencidos();
+	}
+	
+	private boolean temLotesVencidos() {
+		if(lotesVencidos>0){
+			return true;	
+		}else{
+			return false;
+		}	
 	}
 }

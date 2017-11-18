@@ -10,8 +10,6 @@ import org.omnifaces.util.Messages;
 import br.com.WSValidyCheck.dao.UsuarioDAO;
 import br.com.WSValidyCheck.domain.Usuario;
 
-
-
 @ManagedBean
 @SessionScoped
 public class AutenticacaoBean {
@@ -50,10 +48,19 @@ public class AutenticacaoBean {
 				Messages.addGlobalError("login e/ou senha incorretos");
 				return;
 			}
-			Faces.redirect("./pages/lote.xhtml");
+			Faces.redirect("./pages/home.xhtml");
 		} catch (IOException erro) {
 			erro.printStackTrace();
 			Messages.addGlobalError(erro.getMessage());
+		}
+	}
+	
+	public void homeClick(){
+		try {
+			Faces.redirect("./pages/home.xhtml");
+		} catch (IOException e) {
+			e.printStackTrace();
+			Messages.addGlobalError(e.getMessage());
 		}
 	}
 }

@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="produtos" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1f8f206f-dd0a-4c4a-8448-26d21224d072">
+	<property name="com.jaspersoft.studio.data.sql.tables">
+		<![CDATA[dmFsaWR5Y2hlY2tiZC5wcm9kdXRvICwxNSwxNSxlMWM3Y2M3MS1kNWQzLTQ4NTgtYTBiMy00ZTJm
+NTZmNGY4NDY7dmFsaWR5Y2hlY2tiZC5zZWNhbyAsMTcxLDI4LGYxMWM5N2ViLWJiZDYtNDIyOS05
+ZTg4LTY4MDg1YzU2ODc4Yzs=]]>
+	</property>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Validy Adapter"/>
+	<parameter name="COD_BARRA" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOME_PRODUTO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="NOME_SECAO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%%"]]></defaultValueExpression>
+	</parameter>
+	<queryString language="SQL">
+		<![CDATA[SELECT validycheckbd.produto.codBarraProduto,
+	validycheckbd.produto.nomeProduto,
+	validycheckbd.secao.nomeSecao,
+	validycheckbd.secao.codigo
+FROM validycheckbd.produto
+	INNER JOIN validycheckbd.secao ON 
+	 validycheckbd.produto.secao_codigo = validycheckbd.secao.codigo 
+WHERE 
+	 validycheckbd.produto.codBarraProduto LIKE $P{COD_BARRA} 
+	 OR validycheckbd.produto.nomeProduto LIKE $P{NOME_PRODUTO} 
+	 OR validycheckbd.secao.nomeSecao LIKE $P{NOME_SECAO} 
+	 OR validycheckbd.secao.codigo LIKE $P{NOME_SECAO} 
+ORDER BY validycheckbd.produto.nomeProduto ASC]]>
+	</queryString>
+	<field name="codBarraProduto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="codBarraProduto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="nomeProduto" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nomeProduto"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="produto"/>
+	</field>
+	<field name="nomeSecao" class="java.lang.String">
+		<property name="com.jaspersoft.studio.field.label" value="nomeSecao"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="secao"/>
+	</field>
+	<field name="codigo" class="java.lang.Long">
+		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
+		<property name="com.jaspersoft.studio.field.tree.path" value="secao"/>
+	</field>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="84" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="280" height="80" uuid="855181cc-bba3-4337-bf06-255fe2997d81"/>
+				<imageExpression><![CDATA["../resources/images/validycheck_logofull.png"]]></imageExpression>
+			</image>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="34" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="0" width="527" height="30" uuid="31bad77d-79d2-4133-8d96-7e261d818eba"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="16"/>
+				</textElement>
+				<text><![CDATA[Listagem de Produtos]]></text>
+			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="379" y="0" width="170" height="30" uuid="2fdc5e68-6bc6-4ecb-aa0e-2feefb9916e7"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageHeader>
+	<columnHeader>
+		<band height="38" splitType="Stretch">
+			<staticText>
+				<reportElement x="18" y="1" width="162" height="30" uuid="202f352c-0e23-4708-b689-484cdebfde6f">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="903d8d3c-34f4-45ff-92a4-2f893a852661"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Código de Barras]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="0" width="200" height="30" uuid="cb163595-cbea-4900-bdd8-56de22f91444">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4afc182a-c832-48f7-b9df-34aa36cf21f3"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial" size="12"/>
+				</textElement>
+				<text><![CDATA[Produto]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="381" y="0" width="164" height="30" uuid="0e5bc09d-754b-46b3-90e8-92014c0c39b6">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7f958c29-cd9f-4d22-ba2d-94890e0f9535"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<text><![CDATA[Seção]]></text>
+			</staticText>
+			<line>
+				<reportElement x="18" y="33" width="526" height="3" uuid="7362ffd2-d991-4037-af8a-1db5c87f9a79"/>
+			</line>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="21" splitType="Stretch">
+			<textField>
+				<reportElement isPrintRepeatedValues="false" mode="Opaque" x="19" y="1" width="525" height="20" isRemoveLineWhenBlank="true" forecolor="#FFFFFF" backcolor="#FF615C" uuid="6c74c377-593b-44f9-9495-4150e3ef4da8">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="8a99a081-3712-4a77-b5b9-552fa23c67f7"/>
+				</reportElement>
+				<box>
+					<topPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<leftPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<bottomPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+					<rightPen lineWidth="0.0" lineStyle="Solid" lineColor="#000000"/>
+				</box>
+				<textElement textAlignment="Left" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[" Seção: "+$F{nomeSecao}]]></textFieldExpression>
+			</textField>
+		</band>
+		<band height="26">
+			<line>
+				<reportElement x="18" y="24" width="526" height="1" uuid="36d71cc2-9574-48c5-b5bd-d298a97d50f7"/>
+				<graphicElement>
+					<pen lineStyle="Dashed"/>
+				</graphicElement>
+			</line>
+			<textField isBlankWhenNull="true">
+				<reportElement isPrintRepeatedValues="false" x="381" y="2" width="164" height="20" uuid="16bf1cae-5318-4543-8a67-32f9675ca076">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="7f958c29-cd9f-4d22-ba2d-94890e0f9535"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeSecao}]]></textFieldExpression>
+			</textField>
+			<textField isStretchWithOverflow="true" isBlankWhenNull="true">
+				<reportElement x="180" y="2" width="200" height="21" uuid="47a2397c-7508-4691-8fc6-8e886a06c611">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="4afc182a-c832-48f7-b9df-34aa36cf21f3"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{nomeProduto}]]></textFieldExpression>
+			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="19" y="2" width="162" height="21" uuid="8dfdb650-9eb9-41d7-b845-b0bf779595a3">
+					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="903d8d3c-34f4-45ff-92a4-2f893a852661"/>
+				</reportElement>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Arial"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{codBarraProduto}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+	<pageFooter>
+		<band height="54" splitType="Stretch">
+			<textField>
+				<reportElement x="450" y="24" width="100" height="30" uuid="15ed6abc-4a70-473b-af36-f80019978cdf"/>
+				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>

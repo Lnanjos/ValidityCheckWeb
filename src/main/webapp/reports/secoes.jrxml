@@ -6,13 +6,22 @@
 Zjg5YzA0ZjE3NTs=]]>
 	</property>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Validy Adapter"/>
+	<parameter name="NOME_SECAO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%%"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="CODIGO" class="java.lang.String">
+		<defaultValueExpression><![CDATA["%%"]]></defaultValueExpression>
+	</parameter>
 	<queryString language="SQL">
 		<![CDATA[SELECT validycheckbd.secao.codigo,
-	validycheckbd.secao.`nomeSecao`
+	validycheckbd.secao.nomeSecao
 FROM validycheckbd.secao
-ORDER BY validycheckbd.secao.`nomeSecao` ASC]]>
+WHERE 
+	 validycheckbd.secao.nomeSecao LIKE $P{NOME_SECAO} 
+	 OR validycheckbd.secao.codigo LIKE $P{CODIGO} 
+ORDER BY validycheckbd.secao.nomeSecao ASC]]>
 	</queryString>
-	<field name="codigo" class="java.lang.Long">
+	<field name="codigo" class="java.lang.String">
 		<property name="com.jaspersoft.studio.field.label" value="codigo"/>
 		<property name="com.jaspersoft.studio.field.tree.path" value="secao"/>
 	</field>
@@ -24,14 +33,11 @@ ORDER BY validycheckbd.secao.`nomeSecao` ASC]]>
 		<band splitType="Stretch"/>
 	</background>
 	<title>
-		<band height="79" splitType="Stretch">
-			<staticText>
-				<reportElement x="230" y="30" width="100" height="30" uuid="2e7eecf5-afc7-41c2-a522-4871ecec07bd"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle" markup="none">
-					<font fontName="Arial" size="23"/>
-				</textElement>
-				<text><![CDATA[Seções]]></text>
-			</staticText>
+		<band height="80" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="280" height="80" uuid="8d7153ad-daba-4bd5-899a-8a3ffe2f4d59"/>
+				<imageExpression><![CDATA["../resources/images/validycheck_logofull.png"]]></imageExpression>
+			</image>
 		</band>
 	</title>
 	<pageHeader>
@@ -43,6 +49,13 @@ ORDER BY validycheckbd.secao.`nomeSecao` ASC]]>
 				</textElement>
 				<text><![CDATA[Listagem de seções]]></text>
 			</staticText>
+			<textField pattern="MMMMM dd, yyyy">
+				<reportElement x="379" y="0" width="170" height="30" uuid="0c289a3b-5767-4525-ae43-758cced409e1"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle">
+					<font size="12"/>
+				</textElement>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
 		</band>
 	</pageHeader>
 	<columnHeader>
@@ -51,7 +64,7 @@ ORDER BY validycheckbd.secao.`nomeSecao` ASC]]>
 				<reportElement x="100" y="-2" width="100" height="30" uuid="83a49ef9-30ff-4e43-8bcb-6ebe938edc2c">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="692d0c0e-4b70-4b94-915d-31be1acf0628"/>
 				</reportElement>
-				<text><![CDATA[nomeSecao]]></text>
+				<text><![CDATA[Nome da Seção]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="0" y="-2" width="100" height="30" uuid="5696540b-8813-4424-a2d0-a1bf812a7c7b">
@@ -66,13 +79,13 @@ ORDER BY validycheckbd.secao.`nomeSecao` ASC]]>
 	</columnHeader>
 	<detail>
 		<band height="44" splitType="Stretch">
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="100" y="0" width="100" height="30" uuid="e655efa0-0b70-47bd-a989-2de5bf463907">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="692d0c0e-4b70-4b94-915d-31be1acf0628"/>
 				</reportElement>
 				<textFieldExpression><![CDATA[$F{nomeSecao}]]></textFieldExpression>
 			</textField>
-			<textField>
+			<textField isBlankWhenNull="true">
 				<reportElement x="0" y="0" width="100" height="30" uuid="f361b997-07b1-4feb-83e5-1a6cf12b54dc">
 					<property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d468151b-f9ab-49aa-a8f3-74b52667bc16"/>
 				</reportElement>
@@ -86,14 +99,19 @@ ORDER BY validycheckbd.secao.`nomeSecao` ASC]]>
 			</line>
 		</band>
 	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
 	<pageFooter>
-		<band height="70" splitType="Stretch">
+		<band height="47" splitType="Stretch">
 			<textField>
-				<reportElement x="470" y="40" width="100" height="30" uuid="916136fc-5b72-4337-937a-eec735b6fcd3"/>
+				<reportElement x="470" y="0" width="100" height="30" uuid="916136fc-5b72-4337-937a-eec735b6fcd3"/>
 				<textFieldExpression><![CDATA[$V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="306" y="9" width="100" height="30" uuid="1755b580-91aa-4d08-9747-585846f41af8"/>
+				<textFieldExpression><![CDATA[$P{NOME_SECAO}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="10" width="100" height="30" uuid="b262e0fe-262b-46e5-bd1e-81c740667333"/>
+				<textFieldExpression><![CDATA[$P{CODIGO}]]></textFieldExpression>
 			</textField>
 		</band>
 	</pageFooter>

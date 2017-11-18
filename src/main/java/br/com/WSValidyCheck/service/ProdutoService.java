@@ -7,9 +7,12 @@ import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.QueryParam;
 import com.google.gson.Gson;
 import br.com.WSValidyCheck.dao.ProdutoDAO;
 import br.com.WSValidyCheck.domain.Produto;
+import br.com.WSValidyCheck.domain.Secao;
 
 //http://localhost:8080/Validy_Check/ws/produto
 @Path("produto")
@@ -32,6 +35,22 @@ public class ProdutoService {
 
 		Gson gson = new Gson();
 		String json = gson.toJson(produto);
+		return json;
+	}
+
+	@GET
+	@Path("listar")
+	@Produces("text/plain")
+	public String listarPorSecao(@QueryParam("secao") String secaoString) {
+		Secao secao = null;
+		Gson gson = new Gson();
+		if(!secaoString.isEmpty()){
+			secao = gson.fromJson(secaoString, Secao.class);
+		}
+		
+		ProdutoDAO produtoDAO = new ProdutoDAO();
+		List<Produto> produtos = produtoDAO.listarPorSecao(secao);
+		String json = gson.toJson(produtos);
 		return json;
 	}
 

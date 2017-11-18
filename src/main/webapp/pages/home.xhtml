@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/template/modelo.xhtml">
+	<ui:define name="conteudo">
+		<h:body>
+			<h:panelGrid id="painel" columns="1">
+				<h:outputLabel value="Seja bem-vindo" styleClass="ui-widget"
+					style="float: left;    margin-top: 80px; margin-left: 10px;"></h:outputLabel>
+				<h:outputLink value="lote.xhtml">
+					<h:outputLabel rendered="#{loteBean.temLotesVencidos}"
+						value="Você tem " styleClass="ui-widget"
+						style="float: left;color: black;    margin-top: 10px; margin-left: 10px;">
+						<h:outputLabel style="color: red;"
+							value="#{loteBean.lotesVencidos} " />
+						<h:outputLabel value="lotes" />
+						<h:outputLabel style="color: red;" value=" VENCIDOS" />
+					</h:outputLabel>
+				</h:outputLink>
+
+				<h:outputLink value="lote.xhtml">
+					<h:outputLabel rendered="#{loteBean.temLotesVencendo}"
+						value="Você tem " styleClass="ui-widget"
+						style="float: left; color: black;    margin-top: 10px; margin-left: 10px;">
+						<h:outputLabel style="color: lightcoral;"
+							value="#{loteBean.lotesVencendo} " />
+						<h:outputLabel value="lotes com validade para" />
+						<h:outputLabel style="color: lightcoral;" value=" 15 DIAS" />
+					</h:outputLabel>
+				</h:outputLink>
+			</h:panelGrid>
+		</h:body>
+	</ui:define>
+</ui:composition>

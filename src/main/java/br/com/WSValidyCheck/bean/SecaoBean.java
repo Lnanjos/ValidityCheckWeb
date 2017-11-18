@@ -1,15 +1,26 @@
 package br.com.WSValidyCheck.bean;
 
-
 import java.io.Serializable;
+import java.sql.Connection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
+
+import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
+import org.primefaces.component.datatable.DataTable;
+
 import br.com.WSValidyCheck.dao.SecaoDAO;
 import br.com.WSValidyCheck.domain.Secao;
+import br.com.WSValidyCheck.util.HibernateUtil;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperPrintManager;
 
 @SuppressWarnings("serial")
 // A tela se comunica com a parte logica
@@ -83,16 +94,14 @@ public class SecaoBean implements Serializable {
 	// pega o elemento atraves do get e usa coo atributo.para isso modifica o
 	// metodo salvar
 	public void editar(ActionEvent evento) {
-		secao = (Secao) evento.getComponent().getAttributes()
-				.get("secaoSelecionado");
+		secao = (Secao) evento.getComponent().getAttributes().get("secaoSelecionado");
 	}
 
 	// o metodo excluir funciona como o editar, a cada atualização a lista é
 	// gerada novamente com os dados que ainda estao salvos
 	public void excluir(ActionEvent evento) {
 		try {
-			secao = (Secao) evento.getComponent().getAttributes()
-					.get("secaoSelecionado");
+			secao = (Secao) evento.getComponent().getAttributes().get("secaoSelecionado");
 
 			SecaoDAO secaoDAO = new SecaoDAO();
 			secaoDAO.excluir(secao);
@@ -102,6 +111,50 @@ public class SecaoBean implements Serializable {
 		} catch (RuntimeException erro) {
 			Messages.addGlobalError("Ocorreu um erro ao tentar salvar");
 			erro.printStackTrace();
+		}
+	}
+
+	public void imprimir() {
+		try {
+			DataTable tabela = (DataTable) Faces.getViewRoot().findComponent("formListagem:tabela");
+			Map<String, Object> filtros = tabela.getFilters();
+			
+			System.out.println(filtros);
+
+			String filterCodigo = "%"+(String) filtros.get("codigo")+"%";
+			String filterNomeSecao = "%"+(String) filtros.get("nomeSecao")+"%";
+
+			// caminho de acesso ao relatório
+			String caminho = Faces.getRealPath("/reports/secoes.jasper");
+
+			/*
+			 * Método para usar a imagem no relatório String logo =
+			 * Faces.getRealPath("/reports/logo2.png");
+			 * System.out.println(logo); parametros.put("reportlogo", logo);
+			 */
+
+			Map<String, Object> parametros = new HashMap<>();
+			if (!filtros.isEmpty()){
+				if (!filterCodigo.equals("%null%")) {
+					parametros.put("CODIGO", filterCodigo);
+				}
+				if (!filterNomeSecao.equals("%null%")){
+					parametros.put("NOME_SECAO", filterNomeSecao);
+				}	
+			}
+			
+			System.out.println(parametros);
+			
+			// cria a conexão
+			Connection conexao = HibernateUtil.getConexao();
+
+			// Criação do relatório
+			JasperPrint relatorio = JasperFillManager.fillReport(caminho, parametros, conexao);
+			JasperPrintManager.printReport(relatorio, false);
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			Messages.addGlobalError("Ocorreu um erro ao gerar relatório");
 		}
 	}
 

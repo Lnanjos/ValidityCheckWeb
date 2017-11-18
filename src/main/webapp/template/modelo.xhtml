@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>Validy Check</title>
+	<h:outputStylesheet library="css" name="estilo.css" />
+</h:head>
+<h:body rendered="#{autenticacaoBean.usuarioLogado.ativo}">
+	<p:growl id="mensagem" />
+
+	<div id="geral">
+		<div id="topo" class="divTopo">
+			<h:outputLink value="home.xhtml">
+				<p:graphicImage library="images" name="validycheck_logofull.png"
+					style="margin-top: -8px; margin-bottom: -2px" />
+			</h:outputLink>
+			<h:outputLabel
+				value="Usuário: #{autenticacaoBean.usuario.login}"
+				styleClass="ui-widget"
+				style="float: right;    margin-top: 80px; margin-right: 10px;"></h:outputLabel>
+		</div>
+
+		<div id="cabecalho" class="divCabecalho">
+			<h:form id="formMenu">
+				<!-- Implementação do menu -->
+				<p:menubar>
+					<p:menuitem icon="fa fa-home" url="home.xhtml" iconPos="right" />
+					<p:submenu label="Cadastros">
+						<p:menuitem value="Lotes" url="lote.xhtml" />
+
+						<p:menuitem value="Produto" url="produto.xhtml" />
+
+						<p:menuitem value="Seção" url="secao.xhtml" />
+					</p:submenu>
+
+					<p:submenu label="Sistema">
+						<!-- Insere um item no menu criado anteriomente-->
+
+						<p:menuitem value="Usuários" url="usuario.xhtml" />
+
+						<p:menuitem value="Sair" url="autenticacao.xhtml" />
+						<!-- Inserção de item dentro do submenu -->
+					</p:submenu>
+
+				</p:menubar>
+			</h:form>
+		</div>
+
+		<div id="conteudo">
+			<ui:insert name="conteudo" />
+		</div>
+	</div>
+
+</h:body>
+<h:outputLabel rendered="#{!autenticacaoBean.usuarioLogado.ativo}">Por favor realize <h:outputLink
+		value="autenticacao.xhtml">login</h:outputLink> para acessar as funções do sistema</h:outputLabel>
+</html>

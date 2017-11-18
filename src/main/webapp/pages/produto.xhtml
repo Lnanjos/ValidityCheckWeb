@@ -1,119 +1,117 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
 	xmlns:p="http://primefaces.org/ui"
-	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
-<h:head>
-	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Produtos</title>
-</h:head>
-<h:body>
-	<p:layoutUnit>
-		<ui:include src="/template/menu.xhtml"></ui:include>
-	</p:layoutUnit>
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	template="/template/modelo.xhtml">
+	<ui:define name="conteudo">
+		<h:body>
+			<h:form id="formListagem"
+				rendered="#{autenticacaoBean.usuarioLogado.ativo}">
+				<p:panel header="Produtos - Listagem">
+					<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
+						paginator="true" value="#{produtoBean.produtos}" var="produto"
+						rows="6">
+						<f:facet name="footer">
+							<p:commandButton value="Novo"
+								actionListener="#{produtoBean.novo}"
+								oncomplete="PF('dialogo').show();"
+								update=":mensagem :formCadastro:painel">
+								<f:actionListener
+									type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"></f:actionListener>
+							</p:commandButton>
+							<p:commandButton value="Imprimir" icon="ui-icon-print"
+								actionListener="#{produtoBean.imprimir}"></p:commandButton>
+						</f:facet>
+						<p:column headerText="Código de Barras"
+							filterBy="#{produto.codBarraProduto}"
+							sortBy="#{produto.codBarraProduto}">
+							<h:outputText value="#{produto.codBarraProduto}" />
+						</p:column>
 
-	<p:growl id="mensagem" />
+						<p:column headerText="Nome" filterBy="#{produto.nomeProduto}"
+							sortBy="#{produto.nomeProduto}" filterMatchMode="contains">
+							<h:outputText value="#{produto.nomeProduto}" />
+						</p:column>
 
-	<h:form id="formListagem">
-		<p:panel header="Produtos - Listagem">
-			<p:dataTable id="tabela" emptyMessage="Nenhum registro encontrado."
-				paginator="true" value="#{produtoBean.produtos}" var="produto"
-				rows="5">
-				<f:facet name="footer">
-					<p:commandButton value="Novo" actionListener="#{produtoBean.novo}"
-						oncomplete="PF('dialogo').show();"
-						update=":mensagem :formCadastro:painel">
-						<f:actionListener
-							type="org.omnifaces.eventlistener.ResetInputAjaxActionListener"></f:actionListener>
-					</p:commandButton>
-				</f:facet>
-				<p:column headerText="Código de Barras"
-					filterBy="#{produto.codBarraProduto}"
-					sortBy="#{produto.codBarraProduto}">
-					<h:outputText value="#{produto.codBarraProduto}" />
-				</p:column>
+						<p:column headerText="Seção"
+							filterBy="#{produto.secao.codigo} #{produto.secao.nomeSecao}"
+							sortBy="#{produto.secao.codigo}" filterMatchMode="contains">
+							<h:outputText value="#{produto.secao.codigo}" />
+							<h:outputText value=" - " />
+							<h:outputText value="#{produto.secao.nomeSecao}" />
+						</p:column>
 
-				<p:column headerText="Nome" filterBy="#{produto.nomeProduto}"
-					sortBy="#{produto.nomeProduto}">
-					<h:outputText value="#{produto.nomeProduto}" />
-				</p:column>
+						<p:column headerText="Opções">
+							<p:commandButton icon="ui-icon-trash"
+								actionListener="#{produtoBean.excluir}"
+								update=":mensagem :formListagem:tabela">
+								<p:confirm header="Confirmação"
+									message="Deseja excluir a produto" icon="ui-icon-alert" />
+								<f:attribute name="produtoSelecionada" value="#{produto}" />
+							</p:commandButton>
 
-				<p:column headerText="Seção" filterBy="#{produto.secao.nomeSecao}"
-					sortBy="#{produto.secao.nome}">
-					<h:outputText value="#{produto.secao.codigo}" />
-					<h:outputText value=" - " />
-					<h:outputText value="#{produto.secao.nomeSecao}" />
-				</p:column>
+							<p:commandButton icon="ui-icon-pencil"
+								actionListener="#{produtoBean.editar}"
+								update=":mensagem :formCadastro:painel"
+								oncomplete="PF('dialogo').show();">
+								<f:attribute name="produtoSelecionada" value="#{produto}" />
+							</p:commandButton>
+						</p:column>
 
-				<p:column headerText="Opções">
-					<p:commandButton icon="ui-icon-trash"
-						actionListener="#{produtoBean.excluir}"
-						update=":mensagem :formListagem:tabela">
-						<p:confirm header="Confirmação" message="Deseja excluir a produto"
-							icon="ui-icon-alert" />
-						<f:attribute name="produtoSelecionada" value="#{produto}" />
-					</p:commandButton>
+					</p:dataTable>
 
-					<p:commandButton icon="ui-icon-pencil"
-						actionListener="#{produtoBean.editar}"
-						update=":mensagem :formCadastro:painel"
-						oncomplete="PF('dialogo').show();">
-						<f:attribute name="produtoSelecionada" value="#{produto}" />
-					</p:commandButton>
-				</p:column>
+					<p:confirmDialog global="true">
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+					</p:confirmDialog>
+				</p:panel>
+			</h:form>
 
-			</p:dataTable>
+			<p:dialog header="Produtos - Cadastro" widgetVar="dialogo"
+				draggable="false" resizable="false" modal="true" closable="false">
+				<h:form id="formCadastro">
+					<h:panelGrid id="painel" columns="2">
 
-			<p:confirmDialog global="true">
-				<p:commandButton value="Sim" type="button"
-					styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-				<p:commandButton value="Não" type="button"
-					styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-			</p:confirmDialog>
-		</p:panel>
-	</h:form>
+						<p:outputLabel value="Código de Barras:" for="codBarra" />
+						<p:inputText id="codBarra" maxlength="50" size="40"
+							value="#{produtoBean.produto.codBarraProduto}" required="true"
+							requiredMessage="Campo nome Obrigatório!" />
 
-	<p:dialog header="Produtos - Cadastro" widgetVar="dialogo"
-		draggable="false" resizable="false" modal="true" closable="false">
-		<h:form id="formCadastro">
-			<h:panelGrid id="painel" columns="2">
+						<p:outputLabel value="Nome:" for="nome" />
+						<p:inputText id="nome" maxlength="50" size="40"
+							value="#{produtoBean.produto.nomeProduto}" required="true"
+							requiredMessage="Campo nome Obrigatório!" />
 
-				<p:outputLabel value="Código de Barras:" for="codBarra" />
-				<p:inputText id="codBarra" maxlength="50" size="40"
-					value="#{produtoBean.produto.codBarraProduto}" required="true"
-					requiredMessage="Campo nome Obrigatório!" />
+						<p:outputLabel value="Seção:" for="secao" />
 
-				<p:outputLabel value="Nome:" for="nome" />
-				<p:inputText id="nome" maxlength="50" size="40"
-					value="#{produtoBean.produto.nomeProduto}" required="true"
-					requiredMessage="Campo nome Obrigatório!" />
+						<p:selectOneMenu id="secao" filter="true"
+							value="#{produtoBean.produto.secao}"
+							converter="omnifaces.SelectItemsConverter" required="true"
+							requiredMessage="Campo seção Obrigatório!">
+							<f:selectItem noSelectionOption="true"
+								itemLabel="Selecione um secao" />
 
-				<p:outputLabel value="Seção:" for="secao" />
-
-				<p:selectOneMenu id="secao" filter="true"
-					value="#{produtoBean.produto.secao}"
-					converter="omnifaces.SelectItemsConverter" required="true"
-					requiredMessage="Campo seção Obrigatório!">
-					<f:selectItem noSelectionOption="true"
-						itemLabel="Selecione um secao" />
-
-					<!-- //O Var é meu cursor que chamei de secao,
+							<!-- //O Var é meu cursor que chamei de secao,
 					 ele vai pegar o valor da informação que foi clicada e jogar para preencher a combobox. -->
-					<f:selectItems value="#{produtoBean.secoes}" var="secao"
-						itemValue="#{secao}"
-						itemLabel="#{secao.codigo} - #{secao.nomeSecao}" />
-				</p:selectOneMenu>
-			</h:panelGrid>
+							<f:selectItems value="#{produtoBean.secoes}" var="secao"
+								itemValue="#{secao}"
+								itemLabel="#{secao.codigo} - #{secao.nomeSecao}" />
+						</p:selectOneMenu>
+					</h:panelGrid>
 
-			<h:panelGrid columns="2">
-				<p:commandButton value="Salvar"
-					actionListener="#{produtoBean.salvar}"
-					update=":mensagem :formCadastro:painel :formListagem:tabela" />
-				<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
-			</h:panelGrid>
-		</h:form>
-	</p:dialog>
-</h:body>
-</html>
+					<h:panelGrid columns="2">
+						<p:commandButton value="Salvar"
+							actionListener="#{produtoBean.salvar}"
+							update=":mensagem :formCadastro:painel :formListagem:tabela" />
+						<p:commandButton value="Fechar" oncomplete="PF('dialogo').hide();" />
+					</h:panelGrid>
+				</h:form>
+			</p:dialog>
+		</h:body>
+	</ui:define>
+</ui:composition>
