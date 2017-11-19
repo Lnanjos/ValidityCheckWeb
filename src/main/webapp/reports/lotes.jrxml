@@ -66,7 +66,7 @@ ORDER BY validycheckbd.lote.validade ASC]]>
 		<band height="86" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="280" height="80" uuid="ba386231-3c7e-4d8d-a7d0-e95cfed9c01e"/>
-				<imageExpression><![CDATA["../resources/images/validycheck_logofull.png"]]></imageExpression>
+				<imageExpression><![CDATA["../resources/images/validitycheck_logofull.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

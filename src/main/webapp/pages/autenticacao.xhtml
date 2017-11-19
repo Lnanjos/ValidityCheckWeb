@@ -8,7 +8,8 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Autenticação</title>
 </h:head>
-<h:body style="background: url('../resources/images/validycheck_logofull.png');
+<h:body
+	style="background: url('../resources/images/validitycheck_logofull.png');
 	background-repeat: no-repeat; background-attachment: fixed; background-position: bottom right">
 	<p:growl id="mensagem" />
 
@@ -17,8 +18,9 @@
 		<h:form>
 			<h:panelGrid columns="2">
 				<p:outputLabel for="login" value="Login:" />
-				<p:inputText id="login" maxlength="4" size="20" required="true" 
-					requiredMessage="O campo Login é obrigatório" value="#{autenticacaoBean.usuario.login}"/>
+				<p:inputText id="login" maxlength="4" size="20" required="true"
+					requiredMessage="O campo Login é obrigatório"
+					value="#{autenticacaoBean.usuario.login}" />
 
 				<p:outputLabel for="senha" value="Senha:" />
 				<p:password id="senha" maxlength="8" size="20" required="true"

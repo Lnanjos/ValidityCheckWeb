@@ -36,7 +36,7 @@ ORDER BY validycheckbd.secao.nomeSecao ASC]]>
 		<band height="80" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="280" height="80" uuid="8d7153ad-daba-4bd5-899a-8a3ffe2f4d59"/>
-				<imageExpression><![CDATA["../resources/images/validycheck_logofull.png"]]></imageExpression>
+				<imageExpression><![CDATA["../resources/images/validitycheck_logofull.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>

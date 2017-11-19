@@ -7,7 +7,7 @@
 	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <h:head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>Validy Check</title>
+	<title>Validity Check</title>
 	<h:outputStylesheet library="css" name="estilo.css" />
 </h:head>
 <h:body rendered="#{autenticacaoBean.usuarioLogado.ativo}">
@@ -16,11 +16,10 @@
 	<div id="geral">
 		<div id="topo" class="divTopo">
 			<h:outputLink value="home.xhtml">
-				<p:graphicImage library="images" name="validycheck_logofull.png"
+				<p:graphicImage library="images" name="validitycheck_logofull.png"
 					style="margin-top: -8px; margin-bottom: -2px" />
 			</h:outputLink>
-			<h:outputLabel
-				value="Usuário: #{autenticacaoBean.usuario.login}"
+			<h:outputLabel value="Usuário: #{autenticacaoBean.usuario.login}"
 				styleClass="ui-widget"
 				style="float: right;    margin-top: 80px; margin-right: 10px;"></h:outputLabel>
 		</div>

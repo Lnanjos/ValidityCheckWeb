@@ -1,22 +1,22 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
 
-  <groupId>br.com</groupId>
-  <artifactId>WSValidyCheck</artifactId>
-  <version>0.1</version>
-  <packaging>war</packaging>
+	<groupId>br.com</groupId>
+	<artifactId>WSValidityCheck</artifactId>
+	<version>0.1</version>
+	<packaging>war</packaging>
 
-  <name>WSValidyCheck</name>
-  <url>http://maven.apache.org</url>
+	<name>WSValidityCheck</name>
+	<url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
-  <!-- Parâmetros de execução -->
+	<properties>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+	</properties>
+	<!-- Parâmetros de execução -->
 	<build>
 		<!-- Nome do projeto empacotado -->
-		<finalName>Validy Check</finalName>
+		<finalName>Validity Check</finalName>
 
 		<!-- Plugins -->
 		<plugins>
@@ -38,9 +38,9 @@
 			</plugin>
 		</plugins>
 	</build>
-  
 
-  	<!-- Dependências -->
+
+	<!-- Dependências -->
 	<dependencies>
 		<!-- Hibernate Core -->
 		<dependency>

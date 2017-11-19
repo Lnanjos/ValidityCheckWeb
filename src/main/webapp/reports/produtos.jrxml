@@ -54,7 +54,7 @@ ORDER BY validycheckbd.produto.nomeProduto ASC]]>
 		<band height="84" splitType="Stretch">
 			<image>
 				<reportElement x="0" y="0" width="280" height="80" uuid="855181cc-bba3-4337-bf06-255fe2997d81"/>
-				<imageExpression><![CDATA["../resources/images/validycheck_logofull.png"]]></imageExpression>
+				<imageExpression><![CDATA["../resources/images/validitycheck_logofull.png"]]></imageExpression>
 			</image>
 		</band>
 	</title>
