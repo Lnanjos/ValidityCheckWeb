@@ -8,9 +8,7 @@ import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
-
 import com.google.gson.Gson;
-
 import br.com.WSValidityCheck.dao.LoteDAO;
 import br.com.WSValidityCheck.domain.Lote;
 import br.com.WSValidityCheck.domain.Secao;

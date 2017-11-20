@@ -21,23 +21,23 @@ ZjFiMS1hNmIwLTRmYjktOGY3OS01MDY1NjA1YWYzZDQ7]]>
 		<defaultValueExpression><![CDATA["%%"]]></defaultValueExpression>
 	</parameter>
 	<queryString language="SQL">
-		<![CDATA[SELECT validycheckbd.lote.validade,
-	validycheckbd.produto.codBarraProduto,
-	validycheckbd.produto.nomeProduto,
-	validycheckbd.produto.secao_codigo,
-	validycheckbd.secao.nomeSecao
-FROM validycheckbd.lote
-	INNER JOIN validycheckbd.produto ON 
-	 validycheckbd.lote.produto_codigo = validycheckbd.produto.codigo 
-	INNER JOIN validycheckbd.secao ON 
-	 validycheckbd.produto.secao_codigo = validycheckbd.secao.codigo 
+		<![CDATA[SELECT validitycheckbd.lote.validade,
+	validitycheckbd.produto.codBarraProduto,
+	validitycheckbd.produto.nomeProduto,
+	validitycheckbd.produto.secao_codigo,
+	validitycheckbd.secao.nomeSecao
+FROM validitycheckbd.lote
+	INNER JOIN validitycheckbd.produto ON 
+	 validitycheckbd.lote.produto_codigo = validitycheckbd.produto.codigo 
+	INNER JOIN validitycheckbd.secao ON 
+	 validitycheckbd.produto.secao_codigo = validitycheckbd.secao.codigo 
 WHERE 
-	 validycheckbd.produto.codBarraProduto LIKE $P{CODIGO} 
-	 OR validycheckbd.lote.validade LIKE $P{DATA_VALIDADE} 
-	 OR validycheckbd.produto.nomeProduto LIKE $P{NOME_PRODUTO} 
-	 OR validycheckbd.secao.nomeSecao LIKE $P{NOME_SECAO} 
-	 OR validycheckbd.secao.codigo LIKE $P{NOME_SECAO} 
-ORDER BY validycheckbd.lote.validade ASC]]>
+	 validitycheckbd.produto.codBarraProduto LIKE $P{CODIGO} 
+	 OR validitycheckbd.lote.validade LIKE $P{DATA_VALIDADE} 
+	 OR validitycheckbd.produto.nomeProduto LIKE $P{NOME_PRODUTO} 
+	 OR validitycheckbd.secao.nomeSecao LIKE $P{NOME_SECAO} 
+	 OR validitycheckbd.secao.codigo LIKE $P{NOME_SECAO} 
+ORDER BY validitycheckbd.lote.validade ASC]]>
 	</queryString>
 	<field name="validade" class="java.sql.Timestamp">
 		<property name="com.jaspersoft.studio.field.label" value="validade"/>

@@ -10,7 +10,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import com.google.gson.Gson;
-
 import br.com.WSValidityCheck.dao.ProdutoDAO;
 import br.com.WSValidityCheck.domain.Produto;
 import br.com.WSValidityCheck.domain.Secao;

@@ -38,8 +38,7 @@
 			</plugin>
 		</plugins>
 	</build>
-
-
+	
 	<!-- Dependências -->
 	<dependencies>
 		<!-- Hibernate Core -->
@@ -98,8 +97,6 @@
 			<version>1.0.8</version>
 		</dependency>
 
-
-
 		<!-- OmniFaces -->
 		<dependency>
 			<groupId>org.omnifaces</groupId>
@@ -122,7 +119,6 @@
 		</dependency>
 
 		<!-- Jersey para web service restful -->
-		<!-- https://mvnrepository.com/artifact/org.glassfish.jersey.containers/jersey-container-servlet -->
 		<dependency>
 			<groupId>org.glassfish.jersey.containers</groupId>
 			<artifactId>jersey-container-servlet</artifactId>

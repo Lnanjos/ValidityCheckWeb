@@ -19,10 +19,6 @@ public class Secao extends GenericDomain {
 	public void setNomeSecao(String nomeSecao) {
 		this.nomeSecao = nomeSecao;
 	}
-
-	public Secao buscar(Long codigo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 }
+
+

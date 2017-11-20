@@ -5,13 +5,11 @@ import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-
 import br.com.WSValidityCheck.util.HibernateUtil;
-
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
-// é a classe que ira receber as entidades 
+// classe que ira receber as entidades 
 public class GenericDAO<Entidade> {
 	// a classe que se comunicar com ela passara a ter esse valor
 
@@ -74,21 +72,18 @@ public class GenericDAO<Entidade> {
 	
 
 	// criar uma entidade do tipo entidade
-	@SuppressWarnings("unchecked")
 	public Entidade salvar(Entidade entidade) {
-		// criar conecçao com o banco
+		// criar conexão com o banco
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();
-		// é a acao que ocorre dentro da sessao
-		// criaa transação que ocorrerá
+		// é a ação que ocorre dentro da sessao
+		// cria transação que ocorrerá
 		Transaction transacao = null;
 
 		try {
-			// inicia a transacao
+			// inicia a transação
 			transacao = sessao.beginTransaction();
 			// salva o registro no banco
-			//sessao.save(entidade);
-			// função do merge: se o objeto nao existe no banco ele vai salvar um novo, se ele ja existe ele vai atualizar
-			entidade = (Entidade) sessao.merge(entidade);
+			sessao.merge(entidade);
 			// commit encerra a transacao
 			transacao.commit();
 			return entidade;
@@ -102,6 +97,7 @@ public class GenericDAO<Entidade> {
 		}
 
 	}
+
 	public void excluir(Entidade entidade) {
 		// criar conecçao com o banco
 		Session sessao = HibernateUtil.getFabricaDeSessoes().openSession();

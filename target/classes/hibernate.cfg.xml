@@ -1,9 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <!DOCTYPE hibernate-configuration PUBLIC
         "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
         "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
-
 <hibernate-configuration>
 
 	<session-factory>
@@ -30,10 +28,10 @@
 			a sql -->
 		<property name="show_sql">true</property>
 
-		<!-- Cria as tabelas do banco de dados, depois disso muda para validate -->
+		<!-- Propriedade para definir criação ou validação do banco -->
 		<property name="hbm2ddl.auto">validate</property>
 
-		<!-- Mapeamento das entidades coloca todas as classes do projeto -->
+		<!-- Mapeamento das entidades coloca que tornam-se tabelas no banco -->
 		<mapping class="br.com.WSValidityCheck.domain.Secao" />
 		<mapping class="br.com.WSValidityCheck.domain.Produto" />
 		<mapping class="br.com.WSValidityCheck.domain.Lote" />

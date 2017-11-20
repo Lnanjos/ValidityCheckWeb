@@ -5,16 +5,13 @@ import java.sql.Connection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
 import org.omnifaces.util.Faces;
 import org.omnifaces.util.Messages;
 import org.primefaces.component.datatable.DataTable;
-
 import br.com.WSValidityCheck.dao.SecaoDAO;
 import br.com.WSValidityCheck.domain.Secao;
 import br.com.WSValidityCheck.util.HibernateUtil;
@@ -71,12 +68,6 @@ public class SecaoBean implements Serializable {
 			SecaoDAO secaoDAO = new SecaoDAO();
 			secaoDAO.salvar(secao);
 
-			// implementação para atraves da list, e cada vez que for salvo sera
-			// listado novamente os dados e serao mostrados na tela
-			// dessa forma renovo a minha tabela de estados a cada exclusão ou
-			// edição de dados.
-			// instancia-se um novo para pode fazer os outros metodos, muda o
-			// merge no genericDAO
 			secao = new Secao();
 			secoes = secaoDAO.listar();
 
